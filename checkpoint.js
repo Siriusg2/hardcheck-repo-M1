@@ -179,7 +179,7 @@ function passport(minAge, country) {
   // Tu código aca:
   
   return minAge < 18 ? false:  function(array){
-    if(minAge < 18) return false;
+    
     let arr = [];
       for (let i = 0; i < array.length; i++) {
         
@@ -302,6 +302,38 @@ var isAncestor = function (genealogyTree, ancestor, descendant) {
 function cardGame(playerOneCards, playerTwoCards) {
   // Tu código aca:
 
+  
+    
+var casttleOne = 100;
+var casttleTwo = 100;
+
+var card1One = playerOneCards.array[0];
+var card2One = playerOneCards.array[1];
+var card1Two = playerTwoCards.array[0];
+var card2Two = playerTwoCards.array[1];
+
+
+    while(playerOneCards.size() && playerTwoCards.size()){
+   
+      playerOneCards.dequeue()
+      playerOneCards.dequeue()
+      playerTwoCards.dequeue()
+      playerTwoCards.dequeue()
+
+      if(card1One.attack > card2Two.defense){
+        casttleTwo-= card1One.attack - card2Two.defense
+      }
+      
+      if(card1Two.attack > card2One.defense){
+        casttleOne-= card1Two.attack - card2One.defense
+      }
+
+    }
+
+    if (casttleOne > casttleTwo) return "PLAYER ONE";
+    else if (casttleOne < casttleTwo)return "PLAYER TWO";
+    else return "TIE"
+
 }
 
 // ---- Algoritmos ----
@@ -323,6 +355,9 @@ function cardGame(playerOneCards, playerTwoCards) {
 // ]
 function specialSort(array, swapFunction) {
   // Tu código aca:
+
+
+  
 }
 
 module.exports = {
