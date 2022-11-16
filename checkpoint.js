@@ -2,7 +2,8 @@ const { Queue, Node, Stack, LinkedList, BinarySearchTree } = require("./DS.js");
 
 // ---- Linked List ----
 //EJERCICIO 1
-// Agregar el método orderList al prototipo de LinkedList. Este método deberá ordenar los elementos de nuestra lista enlazada de menor a mayor.
+// Agregar el método orderList al prototipo de LinkedList. Este método deberá ordenar los 
+//elementos de nuestra lista enlazada de menor a mayor.
 // Ejemplo:
 //     Suponiendo que la lista actual es: Head --> [4] --> [5] --> [1]
 //     lista.orderList();
@@ -10,6 +11,28 @@ const { Queue, Node, Stack, LinkedList, BinarySearchTree } = require("./DS.js");
 // ACLARACIÓN: Se debe ordenar la lista original y no una nueva.
 LinkedList.prototype.orderList = function () {
   // Tu código aca:
+
+  let current = this.head;
+  if(!current) return false;
+  let arr = [];
+
+  while(current){
+    arr.push(current.value)
+    current = current.next;
+  }
+
+  arr.sort((a,b)=> a-b)
+
+  for (let i = 0; i < arr.length; i++) {
+   this.remove()
+    
+  }
+
+  for (let i = 0; i < arr.length; i++) {
+    this.add(arr[i])
+    
+  }
+  return this;
 };
 
 // EJERCICIO 2
@@ -20,6 +43,27 @@ LinkedList.prototype.orderList = function () {
 // myList = Head --> [4] --> [3] --> [2] --> [1]
 LinkedList.prototype.reverseLinkedList = function () {
   // Tu código aca:
+
+  let current = this.head;
+    if(!current) return false;
+    let arr = [];
+
+    while(current){
+      arr.push(current.value)
+      current = current.next;
+    }
+    let arr2=arr.reverse();
+
+    for (let i = 0; i < arr.length; i++) {
+      this.remove()
+       
+     }
+ 
+     for (let i = 0; i < arr.length; i++) {
+       this.add(arr2[i])
+       
+     }
+     return this;
 };
 
 // EJERCICIO 3
@@ -32,6 +76,41 @@ LinkedList.prototype.reverseLinkedList = function () {
 //    Head --> [2] --> [6] --> [8] --> [15] --> [22] --> [4] --> null
 function joinLinkedList(linkedListOne, linkedListTwo) {
   // Tu código aca:
+
+  let one = linkedListOne.head;
+  let two = linkedListTwo.head;
+  if(!one || !two) return false;
+  
+
+  let arrone = [];
+  let arrtwo = [];
+  let arrmax = [];
+
+  while(one){
+    arrone.push(one.value)
+    one = one.next;
+  }
+
+  while(two){
+    arrtwo.push(two.value)
+    two = two.next;
+  }
+let sum = arrone.length + arrtwo.length
+
+  const max = new LinkedList()
+
+  let i =0;
+  while (arrmax.length < arrone.length + arrtwo.length ){
+    
+    if (arrone[i]!== undefined)arrmax.push(arrone[i])
+    if (arrtwo[i]!== undefined)arrmax.push(arrtwo[i])
+    i++;
+  }
+  for (let i = 0; i < arrmax.length; i++) {
+    max.add(arrmax[i])
+    
+  }
+  return max
 }
 
 // ---- Arboles Binarios ----
@@ -46,7 +125,25 @@ function joinLinkedList(linkedListOne, linkedListTwo) {
 //      \
 //       5
 //  Debería retornarnos 2
-BinarySearchTree.prototype.searchMin = function () {};
+BinarySearchTree.prototype.searchMin = function () {
+
+
+let get = this.get()
+get.sort((a,b)=>a-b)
+return get[0]
+  
+  };
+
+  BinarySearchTree.prototype.get = function () {
+
+    let arr = [];
+
+    arr.push(this.value);
+    if(this.left) arr = arr.concat(this.left.get())
+    if(this.right) arr = arr.concat(this.right.get())
+return arr
+  }
+
 
 // EJERCICIO 5
 // Implementar la función createBST para que a partir de un array recibido como parametro
@@ -62,6 +159,12 @@ BinarySearchTree.prototype.searchMin = function () {};
 //       5
 function createBST(array) {
   // Tu código aca:
+  const my = new BinarySearchTree(array[0])
+  for (let i = 1; i < array.length; i++) {
+my.insert(array[i])
+    
+  }
+return my
 }
 
 // ----- Closures -----
@@ -69,19 +172,49 @@ function createBST(array) {
 // Implementar la función passport que recibe como parámetro:
 //  - Una edad mínima para que las personas puedan ingresar a un país
 //  - El país en cuestión
-// La función passport retorna una función isAllowed, la cual recibirá un arreglo de personas que quieren ingresar al país, y retornará un nuevo arreglo con los admitidos (aquellos que cumplan con la edad requerida).
+// La función passport retorna una función isAllowed, la cual recibirá un arreglo de personas que
+// quieren ingresar al país, y retornará un nuevo arreglo con los admitidos
+/// (aquellos que cumplan con la edad requerida).
 function passport(minAge, country) {
   // Tu código aca:
+  
+  return minAge < 18 ? false:  function(array){
+    if(minAge < 18) return false;
+    let arr = [];
+      for (let i = 0; i < array.length; i++) {
+        
+   if(array[i].age >= minAge && array[i].allowed.indexOf(country)!== -1){
+    arr.push(array[i])
+   }
+       
+      }
+      return arr.length > 0 ? arr : false
+    }
+
+
 }
 
 // ---- Recursión ----
 // EJERCICIO 7
-// La función countDeep recibe por parámetro un arreglo que contiene números y/o arreglos (estos últimos contienen, a su vez, más números y/o arreglos), y retorna la cantidad de arreglos que hay en total, incluyendo al padre.
+// La función countDeep recibe por parámetro un arreglo que contiene números y/o 
+//arreglos (estos últimos contienen, a su vez, más números y/o arreglos), y retorna 
+//la cantidad de arreglos que hay en total, incluyendo al padre.
 // Ejemplo:
 // countDeep( [ 1, 2, 3, [ 4, [ 5, 6 ] ], 7, [ 8 ], 9] ) ----> Debería retornar 4
 function countDeep(arr) {
   // Tu código aca:
+
+let sum =1;
+
+for (let i = 0; i < arr.length; i++) {
+  if(Array.isArray(arr[i])) sum+=countDeep(arr[i])
+  
+  
 }
+return sum;
+}
+
+
 
 // EJERCICIO 8
 // Implementar la función isAncestor: debe determinar si dado dos nombres de personas las mismas
@@ -104,7 +237,31 @@ function countDeep(arr) {
 //  [Observar los tests para otros casos]
 var isAncestor = function (genealogyTree, ancestor, descendant) {
   // Tu código aca:
-};
+
+  if (!genealogyTree.hasOwnProperty(ancestor) || !genealogyTree.hasOwnProperty(descendant)) return false;
+  else if (genealogyTree[ancestor].length === 0) return false;
+  let arr = [];
+  for (let i = 0; i < genealogyTree[ancestor].length; i++) {
+    arr.push(genealogyTree[ancestor][i])
+  }
+
+  for (let i = 0; i < arr.length; i++) {
+
+    if (genealogyTree[arr[i]].includes(descendant)) {
+      return true
+
+
+    }
+
+  }
+
+  return false
+
+    
+  }
+
+
+
 
 // ---- Queue ----
 // EJERCICIO 9
@@ -144,6 +301,7 @@ var isAncestor = function (genealogyTree, ancestor, descendant) {
 // finalizar el juego.
 function cardGame(playerOneCards, playerTwoCards) {
   // Tu código aca:
+
 }
 
 // ---- Algoritmos ----
