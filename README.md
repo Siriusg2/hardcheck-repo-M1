@@ -25,3 +25,4 @@ Una vez terminado cada ejercicio del checkpoint, subir los cambios a tu reposito
 ### Condiciones de aprobación
 
 Para aprobar el checkpoint es necesario contar con un mínimo de 6 ejercicios correctos sobre los 10 totales. Para que un ejercicio sea considerado como correcto debe pasar todos los tests asociados a ese ejercicio. Para verificar este número podes hacer npm run test y mirar la cantidad de test suites pasadas.
+# hardcheckm1
